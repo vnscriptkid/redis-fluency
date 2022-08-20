@@ -51,7 +51,7 @@
 			</div>
 			<div class="prod-info grid gap-10">
 				<div class="flex flex-col md:flex-row justify-between items-center text-gray-900">
-					<p class="font-bold text-xl">${item.price.toFixed(2) || 0}</p>
+					<p class="font-bold text-xl">${item?.price?.toFixed(2) || 0}</p>
 					<a href={`/items/${item.id}`}>
 						<button
 							class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none"
