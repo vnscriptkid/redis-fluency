@@ -7,7 +7,8 @@ export const post: RequestHandler = async ({ request, locals }) => {
 	const id = await createItem({
 		...data,
 		createdAt: DateTime.now(),
-		endingAt: DateTime.now().plus({ seconds: data.duration })
+		endingAt: DateTime.now().plus({ seconds: data.duration }),
+		likes: 0
 	}, locals.session.userId);
 
 	return {
