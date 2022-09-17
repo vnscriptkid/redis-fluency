@@ -9,12 +9,12 @@ export const serialize = (attrs: CreateItemAttrs) => {
         createdAt: attrs.createdAt.toMillis(),
         endingAt: attrs.endingAt.toMillis(),
         likes: attrs.likes,
+        views: attrs.views,
         // bids: attrs.bids,
         // highestBidUserId: attrs.highestBidUserId,
         // imageUrl: attrs.imageUrl,
         // ownerId: attrs.ownerId,
         // price: attrs.price,
         // status: attrs.status,
-        // views: attrs.views,
     }
 };

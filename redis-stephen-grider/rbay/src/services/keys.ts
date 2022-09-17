@@ -1,7 +1,11 @@
 export const sessionsKey = (sessionKey: string) => `sessions#${sessionKey}`;
 
+///////////// ITEM
 export const itemsKey = (itemId: string) => `items#${itemId}`;
+export const itemsByViewsKey = () => `items:views`;
+export const itemsByEndingAtKey = () => `items:endingAt`;
 
+///////////// USER
 // hash `users#1` { username: coolkid, birthday: '21-09-1995', ... }
 export const usersKey = (userId: string) => `users#${userId}`;
 // set `users#1:likes` { item1, item2, item3 }

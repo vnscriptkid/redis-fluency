@@ -8,7 +8,8 @@ export const post: RequestHandler = async ({ request, locals }) => {
 		...data,
 		createdAt: DateTime.now(),
 		endingAt: DateTime.now().plus({ seconds: data.duration }),
-		likes: 0
+		likes: 0,
+		views: 0
 	}, locals.session.userId);
 
 	return {

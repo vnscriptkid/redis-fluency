@@ -21,3 +21,9 @@
 ## sortedset ops
 - `zadd usernames 123 thanh` -> usernames { value: 'thanh', score: 123 }
 - `zscore usernames thanh` -> 123
+- `zincrby items:views 1 itemxyz`
+- `zrange items:endingAt 123456789 +inf byscore LIMIT 0 10`
+
+## hash ops
+- `hincrby item1 price 2` -> increment price of item1 by 2
+- `hgetall users#f9ec65`
