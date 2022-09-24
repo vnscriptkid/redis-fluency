@@ -2,8 +2,11 @@ export const sessionsKey = (sessionKey: string) => `sessions#${sessionKey}`;
 
 ///////////// ITEM
 export const itemsKey = (itemId: string) => `items#${itemId}`;
+// SORTED SET
 export const itemsByViewsKey = () => `items:views`;
 export const itemsByEndingAtKey = () => `items:endingAt`;
+// HYPERLOGLOG
+export const itemsViewsKey = (itemId: string) => `items#${itemId}:views`;
 
 ///////////// USER
 // hash `users#1` { username: coolkid, birthday: '21-09-1995', ... }

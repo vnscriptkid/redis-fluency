@@ -19,6 +19,9 @@
 - sorted sets
     - terms: key, score, member
     - operates on: set, sorted-set, list
+- hyperloglog
+    - appoximate ds (0.81 err)
+    - space efficient 12kb
 
 ## set ops
 - `sadd usernames:unique thanh`
@@ -35,4 +38,6 @@
 - `hgetall users#f9ec65`
 
 ## sort ops
-- 
+
+## hyperloglog
+- `pfadd items#1:views userxyz`
