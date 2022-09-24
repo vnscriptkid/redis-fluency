@@ -12,7 +12,13 @@
     - enforce uniqueness
     - rel btw resources: user#1:likes { item#1, item#2 }
     - common things: user#1 and user#2 both like => intersect
-    - list of things not in order 
+    - list of things not in order
+- sort usecases
+    - sort
+    - join data
+- sorted sets
+    - terms: key, score, member
+    - operates on: set, sorted-set, list
 
 ## set ops
 - `sadd usernames:unique thanh`
@@ -27,3 +33,6 @@
 ## hash ops
 - `hincrby item1 price 2` -> increment price of item1 by 2
 - `hgetall users#f9ec65`
+
+## sort ops
+- 
