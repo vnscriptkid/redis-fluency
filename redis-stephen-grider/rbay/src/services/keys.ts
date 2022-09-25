@@ -7,6 +7,8 @@ export const itemsByViewsKey = () => `items:views`;
 export const itemsByEndingAtKey = () => `items:endingAt`;
 // HYPERLOGLOG
 export const itemsViewsKey = (itemId: string) => `items#${itemId}:views`;
+// LIST
+export const bidHistoryKey = (itemId: string) => `items#${itemId}:history`;
 
 ///////////// USER
 // hash `users#1` { username: coolkid, birthday: '21-09-1995', ... }

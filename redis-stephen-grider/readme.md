@@ -22,6 +22,10 @@
 - hyperloglog
     - appoximate ds (0.81 err)
     - space efficient 12kb
+    - use case: count number of views per item (`user x views item y` +1)
+- list
+    - doubly-linkedlist, append/prepend only mode
+    - use case: last x bids of item
 
 ## set ops
 - `sadd usernames:unique thanh`
@@ -41,3 +45,8 @@
 
 ## hyperloglog
 - `pfadd items#1:views userxyz`
+
+## list
+- `rpush items#1:history 12`
+- `rpush items#1:history 13`
+- `lrange items#1:history 0 -1`

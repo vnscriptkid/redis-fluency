@@ -1,7 +1,31 @@
+import { bidHistoryKey } from '$services/keys';
+import { client } from '$services/redis';
 import type { CreateBidAttrs, Bid } from '$services/types';
+import { DateTime } from 'luxon';
 
-export const createBid = async (attrs: CreateBidAttrs) => {};
+export const createBid = async (attrs: CreateBidAttrs) => {
+	const valueForList = serialize(attrs.amount, attrs.createdAt);
+
+	await client.rPush(bidHistoryKey(attrs.itemId), valueForList);
+};
 
 export const getBidHistory = async (itemId: string, offset = 0, count = 10): Promise<Bid[]> => {
-	return [];
+	const startIdx = -offset - count;
+	const endIdx = -1 - offset;
+	const range = await client.lRange(bidHistoryKey(itemId), startIdx, endIdx);
+
+	return range.map(deserialize);
 };
+
+export function serialize(amount: number, createdAt: DateTime) {
+	return `${amount}:${createdAt.toMillis()}`;
+}
+
+export function deserialize(str: string): Bid {
+	const [amount, createdAt] = str.split(':')
+
+	return {
+		amount: parseFloat(amount),
+		createdAt: DateTime.fromMillis(parseInt(createdAt))
+	}
+}
