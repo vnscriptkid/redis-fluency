@@ -5,6 +5,7 @@ export const itemsKey = (itemId: string) => `items#${itemId}`;
 // SORTED SET
 export const itemsByViewsKey = () => `items:views`;
 export const itemsByEndingAtKey = () => `items:endingAt`;
+export const itemsByPriceKey = () => `items:price`;
 // HYPERLOGLOG
 export const itemsViewsKey = (itemId: string) => `items#${itemId}:views`;
 // LIST
