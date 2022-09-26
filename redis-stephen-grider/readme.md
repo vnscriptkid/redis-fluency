@@ -26,6 +26,11 @@
 - list
     - doubly-linkedlist, append/prepend only mode
     - use case: last x bids of item
+- concurrency solutions:
+    - atomic update: hincrby, setnx
+    - transaction: watch + multi
+    - lock
+    - lua script
 
 ## set ops
 - `sadd usernames:unique thanh`

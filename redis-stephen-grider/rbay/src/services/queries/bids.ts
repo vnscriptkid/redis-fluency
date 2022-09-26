@@ -5,30 +5,35 @@ import { DateTime } from 'luxon';
 import { getItem } from './items';
 
 export const createBid = async (attrs: CreateBidAttrs) => {
-	const item = await getItem(attrs.itemId);
+	return client.executeIsolated(async (isolatedClient) => {
+		await isolatedClient.watch(itemsKey(attrs.itemId))
 
-	if (!item) {
-		throw new Error('ItemNotFound')
-	}
+		const item = await getItem(attrs.itemId);
 
-	if (attrs.amount <= item.price /* current highest bid */) {
-		throw new Error('BidPriceMustBeGreaterThanCurrentHighestBid')
-	}
+		if (!item) {
+			throw new Error('ItemNotFound')
+		}
 
-	if (Date.now() >= item.endingAt.toMillis()) {
-		throw new Error('ItemHasBeenExpired')
-	}
+		if (attrs.amount <= item.price /* current highest bid */) {
+			throw new Error('BidPriceMustBeGreaterThanCurrentHighestBid')
+		}
 
-	const valueForList = serialize(attrs.amount, attrs.createdAt);
+		if (Date.now() >= item.endingAt.toMillis()) {
+			throw new Error('ItemHasBeenExpired')
+		}
 
-	await Promise.all([
-		client.rPush(bidHistoryKey(attrs.itemId), valueForList),
-		client.hSet(itemsKey(attrs.itemId), {
-			price: attrs.amount,
-			highestBidUserId: attrs.userId,
-			bids: item.bids + 1
-		})
-	]);
+		const valueForList = serialize(attrs.amount, attrs.createdAt);
+
+		return isolatedClient.multi()
+			.rPush(bidHistoryKey(attrs.itemId), valueForList)
+			.hSet(itemsKey(attrs.itemId), {
+				price: attrs.amount,
+				highestBidUserId: attrs.userId,
+				bids: item.bids + 1
+			})
+			.exec();
+	})
+
 };
 
 export const getBidHistory = async (itemId: string, offset = 0, count = 10): Promise<Bid[]> => {
