@@ -1,4 +1,4 @@
-import { bidHistoryKey } from '$services/keys';
+import { bidHistoryKey, itemsKey } from '$services/keys';
 import { client } from '$services/redis';
 import type { CreateBidAttrs, Bid } from '$services/types';
 import { DateTime } from 'luxon';
@@ -11,8 +11,8 @@ export const createBid = async (attrs: CreateBidAttrs) => {
 		throw new Error('ItemNotFound')
 	}
 
-	if (attrs.amount <= item.price) {
-		throw new Error('BidPriceMustBeGreaterThanItemPrice')
+	if (attrs.amount <= item.price /* current highest bid */) {
+		throw new Error('BidPriceMustBeGreaterThanCurrentHighestBid')
 	}
 
 	if (Date.now() >= item.endingAt.toMillis()) {
@@ -21,7 +21,14 @@ export const createBid = async (attrs: CreateBidAttrs) => {
 
 	const valueForList = serialize(attrs.amount, attrs.createdAt);
 
-	await client.rPush(bidHistoryKey(attrs.itemId), valueForList);
+	await Promise.all([
+		client.rPush(bidHistoryKey(attrs.itemId), valueForList),
+		client.hSet(itemsKey(attrs.itemId), {
+			price: attrs.amount,
+			highestBidUserId: attrs.userId,
+			bids: item.bids + 1
+		})
+	]);
 };
 
 export const getBidHistory = async (itemId: string, offset = 0, count = 10): Promise<Bid[]> => {
