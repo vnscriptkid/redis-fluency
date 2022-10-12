@@ -31,6 +31,15 @@
     - transaction: watch + multi
     - lock
     - lua script
+- lua script
+    - define vars: string, number, array, object
+    - loop key,value of array/object
+    - 1-based idx system
+    - if/else
+    - redis
+        - script load
+        - evalsha
+
 
 ## set ops
 - `sadd usernames:unique thanh`
