@@ -1,0 +1,13 @@
+###
+GET http://localhost:3000/hello?name=thanh&age=12
+
+###
+GET http://localhost:3000/hello/1?age=12
+
+###
+POST http://localhost:3000/hi
+Content-Type: application/json
+
+{
+    "name": "thanh"
+}
